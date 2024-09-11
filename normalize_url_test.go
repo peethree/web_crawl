@@ -12,7 +12,7 @@ import (
 // 	}
 // }
 
-func TestNormalizeURL_(t *testing.T) {
+func TestNormalizeURL(t *testing.T) {
 	tests := []struct {
 		name     string
 		inputURL string
