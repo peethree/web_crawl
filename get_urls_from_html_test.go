@@ -26,7 +26,7 @@ func TestGetURLsfromHTML(t *testing.T) {
 			<a href="https://other.com/path/one">
 				<span>Boot.dev</span>
 			</a>
-			<a href="/okay/try/this/on/for/size">
+			<a href="okay/try/this/on/for/size">
 				<span>Boot.dev</span>
 			</a>
 		</body>

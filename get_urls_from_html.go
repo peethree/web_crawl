@@ -8,37 +8,39 @@ import (
 )
 
 func getURLsFromHTML(htmlBody, rawBaseURL string) ([]string, error) {
-
 	// io.reader
 	r := strings.NewReader(htmlBody)
 
 	// html Node tree
 	htmlNodeTree, err := html.Parse(r)
 	if err != nil {
-		return []string{}, err
+		return nil, err
 	}
 
+	// return slice
 	urls := []string{}
 
-	//  recursively traverse the node tree and find the <a> tag "anchor" elements
+	baseURL, err := url.Parse(rawBaseURL)
+	if err != nil {
+		return nil, err
+	}
+
+	//  recursively traverse the html node tree and find the <a> tag "anchor" elements
 	var f func(*html.Node)
 	f = func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "a" {
 			for _, a := range n.Attr {
 				if a.Key == "href" {
-					// if path is relative, add a.Val ontop of input URL
-					// else add new url to return list
+					// if path is relative, reference absolute URL
 					val := a.Val
 					parsedUrl, err := url.Parse(val)
 					if err != nil {
 						continue
 					}
-					// url is relative
-					if !parsedUrl.IsAbs() {
-						val = rawBaseURL + parsedUrl.Path
-					}
-					urls = append(urls, val)
-					break
+					// handle relative urls
+					resolvedURL := baseURL.ResolveReference(parsedUrl)
+					// append to return slice of urls as a string
+					urls = append(urls, resolvedURL.String())
 				}
 			}
 		}
