@@ -28,3 +28,9 @@ func (cfg *config) addPageVisit(normalizedURL string) (isFirst bool) {
 	cfg.pages[normalizedURL] = 1
 	return true
 }
+
+func (cfg *config) pagesLength() int {
+	cfg.mu.Lock()
+	defer cfg.mu.Unlock()
+	return len(cfg.pages)
+}

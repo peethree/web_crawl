@@ -9,6 +9,11 @@ func (cfg *config) crawlPage(rawCurrentURL string) {
 	// decrement  wg counter by one.
 	defer cfg.wg.Done()
 
+	// stop crawling if max pages is reached
+	if cfg.pagesLength() >= cfg.maxPages {
+		return
+	}
+
 	// rawcurrentURL has to be on same domain as rawBaseURL
 	rcu, err := url.ParseRequestURI(rawCurrentURL)
 	if err != nil {
