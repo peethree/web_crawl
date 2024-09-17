@@ -61,9 +61,9 @@ func (cfg *config) crawlPage(rawCurrentURL string) {
 		cfg.wg.Add(1)
 		// new go routine, anonymous function, calls itself at the end with (u)
 		go func(url string) {
-			// Block if too many active
+			// block if too many active
 			cfg.concurrencyControl <- struct{}{}
-			// Release when done
+			// release when done
 			defer func() { <-cfg.concurrencyControl }()
 			// recursive call
 			cfg.crawlPage(url)
