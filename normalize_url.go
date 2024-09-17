@@ -1,21 +1,26 @@
 package main
 
 import (
+	"fmt"
 	"net/url"
 	"strings"
 )
 
 func normalizeURL(u string) (string, error) {
 
-	normalizedURL, err := url.Parse(u)
+	parseURL, err := url.Parse(u)
 	if err != nil {
+		fmt.Println("error parsing the url for normalization")
 		return "", err
 	}
 
+	normalizedURL := parseURL.Host + parseURL.Path
+	normalizedURL = strings.ToLower(normalizedURL)
+
 	// trim trailing "/" from path
-	normalizedURL.Path = strings.TrimSuffix(normalizedURL.Path, "/")
+	normalizedURL = strings.TrimSuffix(normalizedURL, "/")
 
-	// build up the desired url: blog.boot.dev/path
-	return normalizedURL.Host + normalizedURL.Path, nil
+	// if the url is relative, build up absolute
 
+	return normalizedURL, nil
 }

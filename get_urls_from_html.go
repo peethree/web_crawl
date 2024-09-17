@@ -32,13 +32,13 @@ func getURLsFromHTML(htmlBody, rawBaseURL string) ([]string, error) {
 			for _, a := range n.Attr {
 				if a.Key == "href" {
 					// if path is relative, reference absolute URL
-					val := a.Val
-					parsedUrl, err := url.Parse(val)
+					parsedUrl, err := url.Parse(a.Val)
 					if err != nil {
 						continue
 					}
 					// handle relative urls
 					resolvedURL := baseURL.ResolveReference(parsedUrl)
+
 					// append to return slice of urls as a string
 					urls = append(urls, resolvedURL.String())
 				}

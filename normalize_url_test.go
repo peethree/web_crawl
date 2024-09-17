@@ -43,6 +43,46 @@ func TestNormalizeURL(t *testing.T) {
 			inputURL: "https://blog.boot.dev/path/",
 			expected: "blog.boot.dev/path",
 		},
+		{
+			name:     "tests with domain",
+			inputURL: "https://blog.boot.dev",
+			expected: "blog.boot.dev",
+		},
+		{
+			name:     "further tests with domain",
+			inputURL: "https://blog.boot.dev/",
+			expected: "blog.boot.dev",
+		},
+		{
+			name:     "query",
+			inputURL: "https://blog.boot.dev/path?query=value",
+			expected: "blog.boot.dev/path",
+		},
+		{
+			name:     "parameter",
+			inputURL: "https://blog.boot.dev/path#section",
+			expected: "blog.boot.dev/path",
+		},
+		{
+			name:     "subdomain",
+			inputURL: "https://subdomain.blog.boot.dev/path",
+			expected: "subdomain.blog.boot.dev/path",
+		},
+		{
+			name:     "port",
+			inputURL: "https://blog.boot.dev:8080/path",
+			expected: "blog.boot.dev/path",
+		},
+		{
+			name:     "relative url",
+			inputURL: "/path/to/page",
+			expected: "/path/to/page",
+		},
+		{
+			name:     "just a '/'",
+			inputURL: "/",
+			expected: "",
+		},
 	}
 
 	for i, tc := range tests {
