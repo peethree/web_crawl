@@ -44,7 +44,7 @@ func (cfg *config) crawlPage(rawCurrentURL string) {
 	}
 
 	// get the urls from currentHTML
-	urls, err := getURLsFromHTML(currentHTML, cfg.baseURL.Host)
+	urls, err := getURLsFromHTML(currentHTML, cfg.baseURL.String())
 	// fmt.Println("getting urls from html", urls)
 	if err != nil {
 		fmt.Println("error getting urls:", err)

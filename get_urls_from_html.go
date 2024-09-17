@@ -17,9 +17,10 @@ func getURLsFromHTML(htmlBody, rawBaseURL string) ([]string, error) {
 		return nil, err
 	}
 
-	// return slice
+	// make a slice that holds all the urls
 	urls := []string{}
 
+	// parse base URL
 	baseURL, err := url.Parse(rawBaseURL)
 	if err != nil {
 		return nil, err
@@ -31,6 +32,9 @@ func getURLsFromHTML(htmlBody, rawBaseURL string) ([]string, error) {
 		if n.Type == html.ElementNode && n.Data == "a" {
 			for _, a := range n.Attr {
 				if a.Key == "href" {
+					if a.Val == "" {
+						continue
+					}
 					// if path is relative, reference absolute URL
 					parsedUrl, err := url.Parse(a.Val)
 					if err != nil {

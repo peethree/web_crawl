@@ -64,7 +64,9 @@ func main() {
 	// wait group wait after function
 	cfg.wg.Wait()
 
-	for rcuNormalized, count := range cfg.pages {
-		fmt.Printf("%d - %s\n", count, rcuNormalized)
-	}
+	// for rcuNormalized, count := range cfg.pages {
+	// 	fmt.Printf("%d - %s\n", count, rcuNormalized)
+	// }
+
+	printReport(cfg.pages, givenURL)
 }
