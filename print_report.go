@@ -17,7 +17,14 @@ func printReport(pages map[string]int, baseURL string) {
 	for _, page := range sortedPages {
 		url := page.URL
 		count := page.Count
-		fmt.Printf("Found %d internal links to %s\n", count, url)
+
+		link := "link"
+
+		if page.Count > 1 {
+			link = "links"
+		}
+
+		fmt.Printf("Found %d internal %s to %s\n", count, link, url)
 	}
 }
 
